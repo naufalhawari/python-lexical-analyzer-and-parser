@@ -256,11 +256,11 @@ function parser(code) {
                     stack.push("=");
                     stack.push("variabel");
                 }
-				else if (symbol==="print"){
-					stack.pop("aksi");
-					stack.push("variabel");
-					stack.push("print");
-				}
+		else if (symbol==="print"){
+		    stack.pop("aksi");
+		    stack.push("variabel");
+		    stack.push("print");
+		}
                 else {
                     state = "error";
                 }
@@ -533,7 +533,7 @@ function parser(code) {
                     state = "error";
                 }
                 break;
-			case "print":
+	    case "print":
                 if (symbol === "print") {
                     stack.pop("print");
                     head++;
