@@ -32,6 +32,9 @@ function lexicalAnalyzer(terminal) {
                 else if (terminal[i] === 'x' || terminal[i] === 'y' || terminal[i] === ':' || terminal[i] === '+' || terminal[i] === '-') {
                     state = 99;
                 } 
+				else if (terminal[i] === 'p'){
+                    state = 15;
+                } 
                 else {
                     state = -1;
                 }
@@ -148,6 +151,34 @@ function lexicalAnalyzer(terminal) {
                     state = -1
                 }
                 break;
+			case 15:
+                if (terminal[i] === 'r') {
+                    state = 16;
+                } else {
+                    state = -1
+                }
+                break;
+			case 16:
+                if (terminal[i] === 'i') {
+                    state = 17;
+                } else {
+                    state = -1
+                }
+                break;
+			case 17:
+                if (terminal[i] === 'n') {
+                    state = 18;
+                } else {
+                    state = -1
+                }
+                break;
+			case 18:
+                if (terminal[i] === 't') {
+                    state = 99;
+                } else {
+                    state = -1
+                }
+                break;
             case 99:
                 state = -1;
                 break;
@@ -225,6 +256,11 @@ function parser(code) {
                     stack.push("=");
                     stack.push("variabel");
                 }
+				else if (symbol==="print"){
+					stack.pop("aksi");
+					stack.push("variabel");
+					stack.push("print");
+				}
                 else {
                     state = "error";
                 }
@@ -491,6 +527,15 @@ function parser(code) {
             case "**":
                 if (symbol === "**") {
                     stack.pop("**");
+                    head++;
+                    symbol = code[head];
+                } else {
+                    state = "error";
+                }
+                break;
+			case "print":
+                if (symbol === "print") {
+                    stack.pop("print");
                     head++;
                     symbol = code[head];
                 } else {
