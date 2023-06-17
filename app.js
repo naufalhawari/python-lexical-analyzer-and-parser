@@ -209,12 +209,12 @@ function parser(code) {
     state = "q";
 
     let head = 0;
+
+    code.push("EOS");
     let symbol = code[head];
 
     let topOfStack = stack.at(-1);
-    while (topOfStack !== "#" && state !== "error") {
-        console.log(state)
-        console.log(topOfStack);
+    while (symbol !== "EOS" && state !== "error") {
         switch (topOfStack) {
             case "statement": 
                 if (symbol === "while") {
@@ -546,7 +546,6 @@ function parser(code) {
                 state = "error";
                 break;
         }
-
         topOfStack = stack.at(-1);
     }
 
@@ -573,6 +572,7 @@ submitButton.addEventListener("click", () => {
     if (codeSplitted.at(-1) === '') {
         codeSplitted.pop('')
     }
+    console.warn(codeSplitted);
 
     codeSplitted.forEach(item => {
         if (lexicalAnalyzer(item) === false) {
