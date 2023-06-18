@@ -546,10 +546,12 @@ function parser(code) {
                 state = "error";
                 break;
         }
+
         topOfStack = stack.at(-1);
+
     }
 
-    if (state !== "error") {
+    if (topOfStack === "#" && symbol === "EOS") {
         stack.pop("#");
         state = "f";
     }
@@ -572,7 +574,6 @@ submitButton.addEventListener("click", () => {
     if (codeSplitted.at(-1) === '') {
         codeSplitted.pop('')
     }
-    console.warn(codeSplitted);
 
     codeSplitted.forEach(item => {
         if (lexicalAnalyzer(item) === false) {
